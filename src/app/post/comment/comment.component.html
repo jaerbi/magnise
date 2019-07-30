@@ -1,0 +1,72 @@
+<div class="row collection-item">
+  <div class="col s12">
+
+    <blockquote>
+
+      <div>
+        <div *ngIf="!isEditMode">
+          <p>{{ postComment.description }}</p>
+          <p>{{ postComment.date }}</p>
+        </div>
+
+        <div *ngIf="isEditMode">
+          <app-comment-edit [comment]="postComment"></app-comment-edit>
+        </div>
+      </div>
+
+      <div class="actions" *ngIf="!isEditMode">
+        <button
+          class="btn waves-effect waves-light btn-small"
+          type="button"
+          (click)="onDelete()"
+        >
+          delete
+          <i class="material-icons right">delete</i>
+        </button>
+
+        <button
+          class="btn waves-effect waves-light btn-small"
+          type="button"
+          (click)="openEdit()"
+        >
+          edit
+          <i class="material-icons right">edit</i>
+        </button>
+      </div>
+
+      <!--Sub comment component-->
+      <div *ngIf="subComments">
+        <app-sub-comment
+          *ngFor="let subComment of subComments"
+          [postSubComment]="subComment"
+        ></app-sub-comment>
+      </div>
+
+      <!--Sub comment form-->
+      <form [formGroup]="subCommentForm" (ngSubmit)="onSubmitSub()">
+        <div class="col s10">
+
+        <textarea
+          placeholder="Comment this post"
+          cols="30"
+          rows="5"
+          formControlName="description"
+        ></textarea>
+
+        <button
+          class="btn waves-effect waves-light"
+          type="submit"
+          [disabled]="!subCommentForm.valid"
+        >
+          Comment
+          <i class="material-icons right">send</i>
+        </button>
+
+        </div>
+      </form>
+
+    </blockquote>
+
+  </div>
+</div>
+

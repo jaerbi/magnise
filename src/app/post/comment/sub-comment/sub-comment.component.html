@@ -1,0 +1,34 @@
+<div class="collection">
+  <div class="row collection-item">
+    <div class="col s12">
+
+      <blockquote>
+        <div *ngIf="!isEditMode" class="comment">
+          <div class="comment-desc">
+            <p>{{ postSubComment.description }}</p>
+            <p>{{ postSubComment.date }}</p>
+          </div>
+
+          <div class="comment-action">
+            <a
+              class="btn-floating waves-effect waves-light"
+              (click)="openEdit()"
+            >
+              <i class="material-icons">edit</i>
+            </a>
+            <a
+              class="btn-floating waves-effect waves-light"
+              (click)="onDelete()"
+            >
+              <i class="material-icons">delete</i>
+            </a>
+          </div>
+        </div>
+
+        <app-comment-edit *ngIf="isEditMode" [comment]="postSubComment"></app-comment-edit>
+      </blockquote>
+
+    </div>
+  </div>
+</div>
+

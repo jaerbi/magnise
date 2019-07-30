@@ -1,0 +1,20 @@
+<form [formGroup]="commentEditForm" (ngSubmit)="onEdit()">
+  <div class="col s12">
+
+    <textarea
+      placeholder="Comment this post"
+      cols="30"
+      rows="5"
+      formControlName="description"
+    ></textarea>
+
+    <button
+      class="btn edit waves-effect waves-light"
+      type="submit"
+      [disabled]="!commentEditForm.valid"
+    >
+      edit
+    </button>
+
+  </div>
+</form>

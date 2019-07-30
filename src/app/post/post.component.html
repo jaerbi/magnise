@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col s12">
+
+    <p>{{ post }}</p>
+
+    <!--Comment form-->
+    <form [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
+      <div class="col s10 push-s2">
+
+        <textarea
+          placeholder="Comment this post"
+          cols="30"
+          rows="5"
+          formControlName="description"
+        ></textarea>
+
+        <button
+          class="btn waves-effect waves-light"
+          type="submit"
+          [disabled]="!commentForm.valid"
+        >
+          Comment
+          <i class="material-icons right">send</i>
+        </button>
+
+      </div>
+    </form>
+
+    <div class="col s10 push-s1">
+      <nav>
+        <div class="nav-wrapper">
+          <form #form="ngForm">
+            <div class="input-field">
+              <input
+                id="search"
+                type="search"
+                name="searchField"
+                [(ngModel)]="searchField"
+                (ngModelChange)="search()"
+              >
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </div>
+      </nav>
+    </div>
+
+    <div class="col s12">
+
+      <div class="collection">
+
+        <div *ngIf="noSearchComment; else elseBlock">
+          <app-comment
+            *ngFor="let comment of filterComments"
+            [postComment]="comment"
+          ></app-comment>
+        </div>
+        <ng-template #elseBlock>
+          <h3 class="center">No comment found with this description</h3>
+        </ng-template>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,1 +1,128 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~materialize-css/dist/css/materialize.min.css";
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+:root {
+  --primary-color: #0683eb;
+  --primary-light-color: rgba(6, 131, 235, 0.78);
+  --home-color: #eaeaea;
+  --light-color: #f2f2f2;
+  --dark-color: #333333;
+  --grey-color: rgba(149, 149, 149, 0.45);
+  --danger-color: crimson;
+  --danger-light-color: rgba(220, 20, 60, 0.82);
+  --warning-color: #e47f05;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background: var(--home-color);
+  color: var(--dark-color);
+}
+
+textarea {
+  resize: vertical;
+  min-height:80px;
+  outline: none;
+  padding: 10px;
+  border: 1px solid var(--grey-color);
+  border-radius: 4px;
+  background-color: var(--light-color);
+};
+
+.comment {
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  .btn {
+    background-color: var(--primary-color);
+
+    &:hover {
+      background-color: var(--primary-light-color);
+    }
+
+    &:focus {
+      background-color: var(--primary-color);
+    }
+
+    &.edit {
+      margin-bottom: 15px;
+      background-color: var(--warning-color);
+    }
+  }
+
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 15px 0;
+
+  button {
+    &:first-child {
+      background-color: var(--danger-color);
+      margin-right: 10px;
+
+      &:hover {
+        background-color: var(--danger-light-color);
+      }
+    }
+
+    &:last-child {
+      background-color: var(--primary-color);
+
+      &:hover {
+        background-color: var(--primary-light-color);
+      }
+    }
+  }
+}
+
+.comment {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.comment-edit {
+  padding-bottom: 10px;
+}
+
+.comment-desc {
+  margin: 0 10px;
+}
+
+.comment-action {
+  display: flex;
+
+  a {
+    background-color: var(--light-color);
+    &:hover {
+      background-color: var(--grey-color);
+    }
+
+    &:first-child {
+      margin-right: 10px;
+
+      .material-icons {
+        color: var(--primary-color);
+      }
+
+    }
+
+    &:last-child {
+      .material-icons {
+        color: var(--danger-color);
+      }
+    }
+  }
+}
