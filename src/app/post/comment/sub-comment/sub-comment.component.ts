@@ -24,6 +24,10 @@ export class SubCommentComponent {
     this.isEditMode = !this.isEditMode;
   }
 
+  onCancel() {
+    this.openEdit();
+  }
+
   /**
    * Delete from firebase sub comment
    */

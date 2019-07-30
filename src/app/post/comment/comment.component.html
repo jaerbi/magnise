@@ -10,7 +10,7 @@
         </div>
 
         <div *ngIf="isEditMode">
-          <app-comment-edit [comment]="postComment"></app-comment-edit>
+          <app-comment-edit [comment]="postComment" (cancelEdit)="onCancel()"></app-comment-edit>
         </div>
       </div>
 

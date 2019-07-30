@@ -8,13 +8,21 @@
       formControlName="description"
     ></textarea>
 
-    <button
-      class="btn edit waves-effect waves-light"
-      type="submit"
-      [disabled]="!commentEditForm.valid"
-    >
-      edit
-    </button>
+    <div class="action-edit">
+      <button
+        class="btn edit waves-effect waves-light"
+        type="submit"
+        [disabled]="!commentEditForm.valid"
+      >
+        edit
+      </button>
+      <a
+        class="btn-floating delete waves-effect waves-light"
+        (click)="onCancel()"
+      >
+        <i class="material-icons">close</i>
+      </a>
+    </div>
 
   </div>
 </form>

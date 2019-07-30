@@ -74,4 +74,8 @@ export class CommentComponent implements OnInit {
     this.isEditMode = !this.isEditMode;
   }
 
+  onCancel() {
+    this.openEdit();
+  }
+
 }

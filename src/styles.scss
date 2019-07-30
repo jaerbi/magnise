@@ -11,6 +11,7 @@
   --danger-color: crimson;
   --danger-light-color: rgba(220, 20, 60, 0.82);
   --warning-color: #e47f05;
+  --warning-light-color: rgba(253, 147, 5, 0.72);
 }
 
 * {
@@ -53,13 +54,7 @@ form {
     &:focus {
       background-color: var(--primary-color);
     }
-
-    &.edit {
-      margin-bottom: 15px;
-      background-color: var(--warning-color);
-    }
   }
-
 }
 
 .actions {
@@ -84,6 +79,32 @@ form {
         background-color: var(--primary-light-color);
       }
     }
+  }
+}
+
+.action-edit {
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    margin-bottom: 15px;
+  }
+
+  .edit {
+    background-color: var(--warning-color);
+
+    &:hover {
+      background-color: var(--warning-light-color);
+    }
+  }
+
+  .delete {
+    background-color: var(--light-color);
+
+    .material-icons {
+      color: var(--danger-color);
+    }
+
   }
 }
 

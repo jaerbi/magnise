@@ -25,7 +25,11 @@
           </div>
         </div>
 
-        <app-comment-edit *ngIf="isEditMode" [comment]="postSubComment"></app-comment-edit>
+        <app-comment-edit
+          *ngIf="isEditMode"
+          [comment]="postSubComment"
+          (cancelEdit)="onCancel()"
+        ></app-comment-edit>
       </blockquote>
 
     </div>
