@@ -1,4 +1,6 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { IComment } from '../../../interfaces/comment.interface';
 
@@ -10,9 +12,12 @@ import { MaterialService } from '../../../services/materialize.service';
   templateUrl: './sub-comment.component.html',
   styleUrls: ['./sub-comment.component.scss']
 })
-export class SubCommentComponent {
+export class SubCommentComponent implements OnDestroy {
 
   @Input() postSubComment: IComment;
+
+  private destroyStream = new Subject<void>();
+
   isEditMode = false;
 
   constructor(private fb: FirebaseService) { }
@@ -33,7 +38,9 @@ export class SubCommentComponent {
    */
   onDelete() {
     if (confirm('Are you shore?')) {
-      this.fb.deleteSubComment(this.postSubComment).subscribe(
+      this.fb.deleteSubComment(this.postSubComment)
+        .pipe(takeUntil(this.destroyStream))
+        .subscribe(
         () => {
           MaterialService.toast(`Was deleted Sub Comment`);
         }, error => {
@@ -41,6 +48,10 @@ export class SubCommentComponent {
         }
       );
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroyStream.next();
   }
 
 }

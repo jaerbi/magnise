@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IComment } from '../../../interfaces/comment.interface';
@@ -6,16 +6,20 @@ import { IComment } from '../../../interfaces/comment.interface';
 import { DateService } from '../../../services/date.service';
 import { FirebaseService } from '../../../services/firebase.service';
 import { MaterialService } from '../../../services/materialize.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-comment-edit',
   templateUrl: './comment-edit.component.html',
   styleUrls: ['./comment-edit.component.scss']
 })
-export class CommentEditComponent implements OnInit {
+export class CommentEditComponent implements OnInit, OnDestroy {
 
   @Input() comment: IComment;
   @Output() cancelEdit = new EventEmitter<void>();
+
+  private destroyStream = new Subject<void>();
 
   commentEditForm: FormGroup;
 
@@ -56,14 +60,18 @@ export class CommentEditComponent implements OnInit {
     const commentEditData = this.commentEditForm.value;
 
     if (this.comment.parentId) {
-      this.fb.editSubComment(commentEditData).subscribe(
+      this.fb.editSubComment(commentEditData)
+        .pipe(takeUntil(this.destroyStream))
+        .subscribe(
         () => {
           MaterialService.toast(`Sub comment - was edited!`);
         }, error => {
           console.error(error);
         });
     } else {
-      this.fb.editComment(commentEditData).subscribe(
+      this.fb.editComment(commentEditData)
+        .pipe(takeUntil(this.destroyStream))
+        .subscribe(
         () => {
           MaterialService.toast(`Comment - was edited!`);
         }, error => {
@@ -77,6 +85,10 @@ export class CommentEditComponent implements OnInit {
    */
   onCancel() {
     this.cancelEdit.emit();
+  }
+
+  ngOnDestroy(): void {
+    this.destroyStream.next();
   }
 
 }

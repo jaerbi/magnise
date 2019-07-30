@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { IComment } from '../interfaces/comment.interface';
 
@@ -12,9 +14,11 @@ import { MaterialService } from '../services/materialize.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnDestroy {
 
   @ViewChild('form', {static: true}) searchForm: NgForm;
+
+  private destroyStream = new Subject<void>();
 
   post: string;
   comments: IComment[];
@@ -37,7 +41,9 @@ export class PostComponent implements OnInit {
       date: new FormControl(this.dateService.date)
     });
 
-    this.fb.getComments().subscribe(
+    this.fb.getComments()
+      .pipe(takeUntil(this.destroyStream))
+      .subscribe(
       (comments) => {
         this.comments = comments;
         this.assignCopy();
@@ -75,13 +81,19 @@ export class PostComponent implements OnInit {
   onSubmitComment() {
     const commentData = this.commentForm.value;
 
-    this.fb.addComment(commentData).subscribe(
+    this.fb.addComment(commentData)
+      .pipe(takeUntil(this.destroyStream))
+      .subscribe(
       comment => {
         MaterialService.toast(`Comment - ${comment.description.slice(0, 25)}... was added!`);
       }, error1 => {
         console.error(error1);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.destroyStream.next();
   }
 
 }
